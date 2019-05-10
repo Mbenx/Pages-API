@@ -1,0 +1,1333 @@
+---
+swagger: "2.0"
+info:
+  description: "Pages API \n"
+  version: "1.0.3"
+  title: "Pages API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/Mbenx47/Pages-API/1.0.0"
+tags:
+- name: "Login Register"
+  description: "everthing about Login & Register"
+- name: "Detail Information"
+  description: "everthing about Detail Information"
+- name: "Addresses"
+  description: "everthing about Address"
+- name: "Navigation"
+  description: "everthing about Navigation"
+- name: "Page Info"
+  description: "everthing about Page Information"
+- name: "Page Content"
+  description: "everthing about Page Content"
+schemes:
+- "https"
+- "http"
+paths:
+  /auth/login:
+    post:
+      tags:
+      - "Login Register"
+      summary: "Manual Login"
+      operationId: "login"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/loginparams"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/successlogin"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/unauthorized"
+      x-swagger-router-controller: "LoginRegister"
+  /auth/register:
+    post:
+      tags:
+      - "Login Register"
+      summary: "Manual Register"
+      operationId: "register"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/registerparams"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/successlogin"
+        422:
+          description: "unprocessable_entity"
+          schema:
+            $ref: "#/definitions/unprocessable_entity"
+      x-swagger-router-controller: "LoginRegister"
+  /auth/facebook:
+    post:
+      tags:
+      - "Login Register"
+      summary: "Facebook Login & Register"
+      operationId: "facebook"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/sosialparams"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/successfacebook"
+        422:
+          description: "unprocessable_entity"
+          schema:
+            $ref: "#/definitions/unprocessable_entity"
+      x-swagger-router-controller: "LoginRegister"
+  /auth/google:
+    post:
+      tags:
+      - "Login Register"
+      summary: "Google Login & Register"
+      operationId: "google"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/sosialparams"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/successgoogle"
+        422:
+          description: "unprocessable_entity"
+          schema:
+            $ref: "#/definitions/unprocessable_entity"
+      x-swagger-router-controller: "LoginRegister"
+  /auth/password:
+    post:
+      tags:
+      - "Login Register"
+      summary: "Forget Password"
+      operationId: "forgetPassword"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/paramsforget"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/forgetsuccess"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/not_found"
+      x-swagger-router-controller: "LoginRegister"
+    put:
+      tags:
+      - "Login Register"
+      summary: "Reset Password"
+      operationId: "resetPassword"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/paramsreset"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/resetsuccess"
+        422:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/unprocessable_entity"
+      x-swagger-router-controller: "LoginRegister"
+  /user/{id}:
+    get:
+      tags:
+      - "Detail Information"
+      summary: "Get user by id"
+      operationId: "userIdGET"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Seo not found"
+      x-swagger-router-controller: "DetailInformation"
+    put:
+      tags:
+      - "Detail Information"
+      summary: "Update user by id"
+      operationId: "userIdPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Seo not found"
+      x-swagger-router-controller: "DetailInformation"
+  /navigation/{code}:
+    get:
+      tags:
+      - "Navigation"
+      summary: "Get List of Navigation"
+      description: "Get list Navigation for"
+      operationId: "getListNavigation"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "code"
+        in: "path"
+        description: "Code of Navigation Type"
+        required: true
+        type: "string"
+        enum:
+        - "category"
+        - "navbar"
+        - "home-navigation"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/NavigationItem"
+        401:
+          description: "Empty navigation list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "Navigation"
+  /page/{id}/banner:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Banner in Page"
+      description: "List of Banner in one page"
+      operationId: "getListPageBanner"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Page Id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Banner"
+        401:
+          description: "Empty Banner list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+  /page/{id}/variant:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Variant in Page"
+      description: "List of Variant in one page"
+      operationId: "getListPageLink"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Page Id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Variant"
+        401:
+          description: "Empty Variant list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+  /page/{id}/links:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Page Links / Description in Page"
+      description: "List of Page Links / Description in one page"
+      operationId: "getListPageVariant"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Page Id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Link"
+        401:
+          description: "Empty Page Link list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/faqs:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Find Page FAQs"
+      description: "Return list of page FAQ"
+      operationId: "findPageFAQ"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessResponseFAQ"
+        400:
+          description: "error"
+          schema:
+            $ref: "#/definitions/unauthorized"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/testimonies:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Find Page Testimonies"
+      description: "Return list of page FAQ"
+      operationId: "findPageTestimonies"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessResponseTestimony"
+        400:
+          description: "error"
+          schema:
+            $ref: "#/definitions/unauthorized"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/blogs:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Finds Page Blogs"
+      description: "Return list of blog posts"
+      operationId: "findPageBlog"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessResponseBlog"
+        400:
+          description: "error"
+          schema:
+            $ref: "#/definitions/unauthorized"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/seo:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get seo by id"
+      operationId: "pagesIdSeoGET"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Seo"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Seo not found"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/galleries:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Gallery"
+      description: "Get list Navigation for Category Bar"
+      operationId: "getGalleries"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/SuccessGalle"
+        401:
+          description: "Empty navigation list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/guidelines:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Guidelines"
+      description: "Get list of Guidelines"
+      operationId: "getGuidelines"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/SuccessGuide"
+        401:
+          description: "Empty navigation list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+  /pages/{id}/products:
+    get:
+      tags:
+      - "Page Content"
+      summary: "Get List of Products"
+      description: "Get list of Products"
+      operationId: "getProducts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of page"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/SuccessProd"
+        401:
+          description: "Empty navigation list"
+        500:
+          description: "Something went wrong"
+      x-swagger-router-controller: "PageContent"
+definitions:
+  loginparams:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        example: "admin@printerous.co.id"
+      password:
+        type: "string"
+        example: "admin1234"
+  successlogin:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "Login Success"
+      code:
+        type: "integer"
+        example: 200
+      data:
+        $ref: "#/definitions/DataUserinfo"
+    example:
+      code: 200
+      data:
+        birthdate: "birthdate"
+        gender: "gender"
+        created_at: "2018-01-25T02:12:06.611Z"
+        source_type: "Platform::User"
+        avatar: "avatar"
+        deleted_at: "deleted_at"
+        updated_at: "2019-05-08T09:00:18.882Z"
+        role_id: "1"
+        phone: "080989999"
+        name: "Pearly Adi Negoro"
+        integration:
+          id: 26955
+          type: "Platform::User"
+        id: "141"
+        source_id: "26955"
+        email: "pearly@printerous.com"
+      messages:
+      - "Login Success"
+      - "Login Success"
+  successfacebook:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "Login Facebook Success"
+      code:
+        type: "integer"
+        example: 200
+      data:
+        $ref: "#/definitions/DataUserinfo"
+    example:
+      code: 200
+      data:
+        birthdate: "birthdate"
+        gender: "gender"
+        created_at: "2018-01-25T02:12:06.611Z"
+        source_type: "Platform::User"
+        avatar: "avatar"
+        deleted_at: "deleted_at"
+        updated_at: "2019-05-08T09:00:18.882Z"
+        role_id: "1"
+        phone: "080989999"
+        name: "Pearly Adi Negoro"
+        integration:
+          id: 26955
+          type: "Platform::User"
+        id: "141"
+        source_id: "26955"
+        email: "pearly@printerous.com"
+      messages:
+      - "Login Facebook Success"
+      - "Login Facebook Success"
+  successgoogle:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "Login Google Success"
+      code:
+        type: "integer"
+        example: 200
+      data:
+        $ref: "#/definitions/DataUserinfo"
+    example:
+      code: 200
+      data:
+        birthdate: "birthdate"
+        gender: "gender"
+        created_at: "2018-01-25T02:12:06.611Z"
+        source_type: "Platform::User"
+        avatar: "avatar"
+        deleted_at: "deleted_at"
+        updated_at: "2019-05-08T09:00:18.882Z"
+        role_id: "1"
+        phone: "080989999"
+        name: "Pearly Adi Negoro"
+        integration:
+          id: 26955
+          type: "Platform::User"
+        id: "141"
+        source_id: "26955"
+        email: "pearly@printerous.com"
+      messages:
+      - "Login Google Success"
+      - "Login Google Success"
+  forgetsuccess:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "Email Has sent"
+      code:
+        type: "integer"
+        example: 200
+      data:
+        type: "object"
+        properties: {}
+    example:
+      code: 200
+      data: "{}"
+      messages:
+      - "Email Has sent"
+      - "Email Has sent"
+  resetsuccess:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "Reset password success"
+      code:
+        type: "integer"
+        example: 200
+      data:
+        type: "object"
+        properties: {}
+    example:
+      code: 200
+      data: "{}"
+      messages:
+      - "Reset password success"
+      - "Reset password success"
+  not_found:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "not found"
+      code:
+        type: "integer"
+        example: 404
+      data:
+        type: "object"
+        properties: {}
+  unauthorized:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "unauthorized"
+      code:
+        type: "integer"
+        example: 401
+      data:
+        type: "object"
+        properties: {}
+  unprocessable_entity:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          type: "string"
+          example: "unprocessable_entity: name cant be blank!"
+      code:
+        type: "integer"
+        example: 422
+      data:
+        type: "object"
+        properties: {}
+  registerparams:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  sosialparams:
+    type: "object"
+    properties:
+      provider:
+        type: "string"
+      uid:
+        type: "string"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      avatar:
+        type: "string"
+  paramsforget:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+  paramsreset:
+    type: "object"
+    properties:
+      reset_password_token:
+        type: "string"
+      password:
+        type: "string"
+      password_confirmation:
+        type: "string"
+  User:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      message:
+        $ref: "#/definitions/adeSuccess"
+      code:
+        type: "string"
+        example: "200"
+      data:
+        $ref: "#/definitions/DataUserinfo"
+    example:
+      code: "200"
+      data:
+        birthdate: "birthdate"
+        gender: "gender"
+        created_at: "2018-01-25T02:12:06.611Z"
+        source_type: "Platform::User"
+        avatar: "avatar"
+        deleted_at: "deleted_at"
+        updated_at: "2019-05-08T09:00:18.882Z"
+        role_id: "1"
+        phone: "080989999"
+        name: "Pearly Adi Negoro"
+        integration:
+          id: 26955
+          type: "Platform::User"
+        id: "141"
+        source_id: "26955"
+        email: "pearly@printerous.com"
+      message: ""
+  DataUserinfo:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "141"
+      role_id:
+        type: "string"
+        example: "1"
+      name:
+        type: "string"
+        example: "Pearly Adi Negoro"
+      phone:
+        type: "string"
+        example: "080989999"
+      avatar:
+        type: "string"
+      birthdate:
+        type: "string"
+      gender:
+        type: "string"
+      email:
+        type: "string"
+        example: "pearly@printerous.com"
+      deleted_at:
+        type: "string"
+      created_at:
+        type: "string"
+        example: "2018-01-25T02:12:06.611Z"
+      updated_at:
+        type: "string"
+        example: "2019-05-08T09:00:18.882Z"
+      source_type:
+        type: "string"
+        example: "Platform::User"
+      source_id:
+        type: "string"
+        example: "26955"
+      integration:
+        $ref: "#/definitions/DataUser_integration"
+    example:
+      birthdate: "birthdate"
+      gender: "gender"
+      created_at: "2018-01-25T02:12:06.611Z"
+      source_type: "Platform::User"
+      avatar: "avatar"
+      deleted_at: "deleted_at"
+      updated_at: "2019-05-08T09:00:18.882Z"
+      role_id: "1"
+      phone: "080989999"
+      name: "Pearly Adi Negoro"
+      integration:
+        id: 26955
+        type: "Platform::User"
+      id: "141"
+      source_id: "26955"
+      email: "pearly@printerous.com"
+  DataUser_integration:
+    properties:
+      id:
+        type: "integer"
+        example: 26955
+      type:
+        type: "string"
+        example: "Platform::User"
+    example:
+      id: 26955
+      type: "Platform::User"
+  NavigationItem:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Business Card"
+      thumbnail:
+        type: "string"
+        example: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      description:
+        type: "string"
+        example: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+          \ praktis untuk kebutuhan Anda"
+      page_url:
+        type: "string"
+        example: "/business-card"
+      custom_link:
+        type: "string"
+        example: ""
+      sub_menu:
+        type: "array"
+        items:
+          $ref: "#/definitions/SubNav"
+    xml:
+      name: "NavigationItem"
+    example:
+      page_url: "/business-card"
+      custom_link: ""
+      thumbnail: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      sub_menu:
+      - page_url: "/business-card-standard"
+        custom_link: ""
+        thumbnail: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+        name: "Business Card Standard"
+        description: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+          \ praktis untuk kebutuhan Anda"
+      - page_url: "/business-card-standard"
+        custom_link: ""
+        thumbnail: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+        name: "Business Card Standard"
+        description: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+          \ praktis untuk kebutuhan Anda"
+      name: "Business Card"
+      description: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+        \ praktis untuk kebutuhan Anda"
+  SubNav:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Business Card Standard"
+      thumbnail:
+        type: "string"
+        example: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      description:
+        type: "string"
+        example: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+          \ praktis untuk kebutuhan Anda"
+      page_url:
+        type: "string"
+        example: "/business-card-standard"
+      custom_link:
+        type: "string"
+        example: ""
+    xml:
+      name: "SubNav"
+    example:
+      page_url: "/business-card-standard"
+      custom_link: ""
+      thumbnail: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      name: "Business Card Standard"
+      description: "Cetak kartu nama online di Printerous dengan harga murah, cepat,\
+        \ praktis untuk kebutuhan Anda"
+  Banner:
+    type: "object"
+    properties:
+      position:
+        type: "integer"
+        example: 1
+      title:
+        type: "string"
+        example: "business_card_banner"
+      file:
+        type: "string"
+        example: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      alt_text:
+        type: "string"
+        example: "Banner Business Card"
+      tags:
+        type: "string"
+        example: ""
+      headline:
+        type: "string"
+        example: "Kartu Nama"
+      subheadline:
+        type: "string"
+        example: "Yakinkan klienmu dengan satu set kartu nama yang memukau. Dengan\
+          \ sentuhan gaya personal, berikan calon klienmu sesuatu yang bisa selalu\
+          \ kamu banggakan"
+    xml:
+      name: "Banner"
+    example:
+      file: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      alt_text: "Banner Business Card"
+      position: 1
+      title: "business_card_banner"
+      headline: "Kartu Nama"
+      subheadline: "Yakinkan klienmu dengan satu set kartu nama yang memukau. Dengan\
+        \ sentuhan gaya personal, berikan calon klienmu sesuatu yang bisa selalu kamu\
+        \ banggakan"
+      tags: ""
+  Variant:
+    type: "object"
+    properties:
+      position:
+        type: "integer"
+        example: 1
+      name:
+        type: "string"
+        example: "Standard"
+      starting_price:
+        type: "integer"
+        example: 12500
+      unit:
+        type: "string"
+        example: "pcs"
+      title:
+        type: "string"
+        example: "Business Card Standard"
+      thumbnail:
+        type: "string"
+        example: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      page_url:
+        type: "string"
+        example: "/business-card-standard"
+    xml:
+      name: "Variant"
+    example:
+      page_url: "/business-card-standard"
+      unit: "pcs"
+      thumbnail: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      starting_price: 12500
+      name: "Standard"
+      position: 1
+      title: "Business Card Standard"
+  Link:
+    type: "object"
+    properties:
+      position:
+        type: "integer"
+        example: 1
+      image:
+        type: "string"
+        example: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      alt_text:
+        type: "string"
+        example: "Business card Image"
+      title:
+        type: "string"
+        example: "We Are Different"
+      description:
+        type: "string"
+        example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas\
+          \ sapien quis nulla venenatis, gravida vehicula risus imperdiet. Suspendisse\
+          \ ac tempus libero. Nam sit amet ex facilisis, sagittis dui ac, sodales\
+          \ lacus"
+      page_url:
+        type: "string"
+        example: "/business-card-standard"
+    xml:
+      name: "Link"
+    example:
+      page_url: "/business-card-standard"
+      image: "https://www.printerous.com/id/business/images/HD/business_page/product/business-card_01.jpg"
+      alt_text: "Business card Image"
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas\
+        \ sapien quis nulla venenatis, gravida vehicula risus imperdiet. Suspendisse\
+        \ ac tempus libero. Nam sit amet ex facilisis, sagittis dui ac, sodales lacus"
+      position: 1
+      title: "We Are Different"
+  Seo:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      message:
+        $ref: "#/definitions/adeSuccess"
+      code:
+        type: "string"
+        example: "200"
+      data:
+        $ref: "#/definitions/DataSeo"
+    example:
+      code: "200"
+      data:
+        meta_description: "meta_description"
+        title: "title"
+        content: "content"
+      message: ""
+  adeSuccess:
+    type: "array"
+    items:
+      type: "string"
+      example: "success"
+  DataSeo:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      meta_description:
+        type: "string"
+      content:
+        type: "string"
+    example:
+      meta_description: "meta_description"
+      title: "title"
+      content: "content"
+  SuccessResponseFAQ:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+      code:
+        type: "integer"
+        format: "int32"
+      data:
+        $ref: "#/definitions/FAQ"
+    example:
+      code: 0
+      data:
+        question: "question"
+        answer: "answer"
+        id: 6
+        position: 1
+      message:
+      - "message"
+      - "message"
+  SuccessResponseTestimony:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+      code:
+        type: "integer"
+        format: "int32"
+      data:
+        $ref: "#/definitions/Testimony"
+    example:
+      code: 0
+      data:
+        image: "image"
+        name: "name"
+        id: 6
+        position: 1
+        avatar: "avatar"
+        job_title: "job_title"
+        content: "content"
+        tags: "tags"
+      message:
+      - "message"
+      - "message"
+  SuccessResponseBlog:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+      code:
+        type: "integer"
+        format: "int32"
+      data:
+        $ref: "#/definitions/Blog"
+    example:
+      code: 0
+      data:
+        thumbnail: "thumbnail"
+        id: 6
+        position: 1
+        title: "title"
+        content: "content"
+      message:
+      - "message"
+      - "message"
+  FAQ:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      question:
+        type: "string"
+      answer:
+        type: "string"
+    example:
+      question: "question"
+      answer: "answer"
+      id: 6
+      position: 1
+  Testimony:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      name:
+        type: "string"
+      job_title:
+        type: "string"
+      avatar:
+        type: "string"
+      image:
+        type: "string"
+      content:
+        type: "string"
+      tags:
+        type: "string"
+    example:
+      image: "image"
+      name: "name"
+      id: 6
+      position: 1
+      avatar: "avatar"
+      job_title: "job_title"
+      content: "content"
+      tags: "tags"
+  Blog:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      title:
+        type: "string"
+      content:
+        type: "string"
+      thumbnail:
+        type: "string"
+    example:
+      thumbnail: "thumbnail"
+      id: 6
+      position: 1
+      title: "title"
+      content: "content"
+  SuccessGalle:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+          example: "Success"
+      code:
+        type: "integer"
+        format: "int32"
+        example: 200
+      data:
+        $ref: "#/definitions/Galleries"
+    example:
+      code: 200
+      data: ""
+      message:
+      - "Success"
+      - "Success"
+  SuccessGuide:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+          example: "Success"
+      code:
+        type: "integer"
+        format: "int32"
+        example: 200
+      data:
+        $ref: "#/definitions/Guidelines"
+    example:
+      code: 200
+      data: ""
+      message:
+      - "Success"
+      - "Success"
+  SuccessProd:
+    type: "object"
+    properties:
+      message:
+        type: "array"
+        items:
+          type: "string"
+          example: "Success"
+      code:
+        type: "integer"
+        format: "int32"
+        example: 200
+      data:
+        $ref: "#/definitions/Products"
+    example:
+      code: 200
+      data: ""
+      message:
+      - "Success"
+      - "Success"
+  Galleries:
+    type: "array"
+    items:
+      $ref: "#/definitions/Galleries_inner"
+  Guidelines:
+    type: "array"
+    items:
+      $ref: "#/definitions/Guidelines_inner"
+  Products:
+    type: "array"
+    items:
+      $ref: "#/definitions/Products_inner"
+  Galleries_inner:
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      feed_source:
+        type: "string"
+      tags:
+        type: "string"
+  Guidelines_inner:
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      mime_type:
+        type: "string"
+      title:
+        type: "string"
+      file:
+        type: "string"
+      alt_text:
+        type: "string"
+      file_size:
+        type: "number"
+      resolution:
+        type: "string"
+      tags:
+        type: "string"
+  Products_inner:
+    properties:
+      id:
+        type: "integer"
+      position:
+        type: "integer"
+      product_type_id:
+        type: "integer"
+      code:
+        type: "string"
+      name:
+        type: "string"
+      spec:
+        type: "string"
+      size:
+        type: "string"
+      side:
+        type: "integer"
+      active_at:
+        type: "string"
+      inactive_at:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
